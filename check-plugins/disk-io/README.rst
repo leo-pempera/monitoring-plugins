@@ -6,7 +6,7 @@ Overview
 
 Checks disk bandwidth over a period of time. The check tracks the maximum bandwidth and alerts if the bandwidth over the last n reads is above a certain percentage (by default 80/90% over the last 5 reads). This works similar to Load5, but at the disk I/O level.
 
-On Linux, the check plugin by default tries to find "important" disks automatically and returns only useful perfdata information, so as not to waste disk space in a time series database with unnecessary disk information (as in earlier versions). To do this, it looks for disks that are mounted to a folder. If you want to monitor more disk than the automatic scan provides, you can use the match parameter. This will generate a list of all disks including the "important" ones and will then act on the ones matching the regex provided. This is indeed necessary on systems with e.g zfs pools, where the pools will not be automatically recognised and you will need to monitor the raw disks with the math option. As a starting point the following regex match will include most disks ``^(nvme[0-9]{1,}n[0-9]{1,}$|[sv]d[a-z][0-9]{1,}|md|dm)``
+On Linux, the check plugin by default tries to find "important" disks automatically and returns only useful perfdata information, so as not to waste disk space in a time series database with unnecessary disk information (as in earlier versions). To do this, it looks for disks that are mounted to a folder. If you want to monitor more disk than the automatic scan provides, you can use the match parameter. This will generate a list of all disks including the "important" ones and will then act on the ones matching the regex provided. This is indeed necessary on systems with e.g zfs pools, where the pools will not be automatically recognised and you will need to monitor the raw disks with the match option. As a starting point the following regex match will include most disks ``^(nvme[0-9]{1,}n[0-9]{1,}$|[sv]d[a-z][0-9]{1,}|md|dm)``
 
 Disk I/O always starts at 10 MiB/sec, but stores the highest measured bandwidth, so it adjusts the ``RWmax/s`` value accordingly. For this reason, this check takes some time to warm up its (cached) readings: The check will throw some warnings and criticals during the first major disk activities above 10Mib/sec until the maximum bandwidth of the disk has been determined.
 
@@ -107,7 +107,7 @@ Match all disks except ``vdc``, ``vdh`` and ``vdz``:
 
     ./disk-io --match='^(?:(?!.*vdc|.*vdh|.*vdz).)*$'
 
-Match all disks starting with sd, vd, md and dm and nvme disks except the raw disk itself
+Match all disks starting with sd, vd, md, dm and nvme disks except the raw disk itself
 
 .. code-block:: bash
 
