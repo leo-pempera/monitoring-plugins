@@ -99,13 +99,13 @@ Just check disk ``dm-0`` (if listed as ``/dev/dm-0``):
 
 .. code-block:: bash
 
-    ./disk-io --match='.*dm-0$'
+    ./disk-io --match='dm-0$'
 
 Match all disks except ``vdc``, ``vdh`` and ``vdz``:
 
 .. code-block:: bash
 
-    ./disk-io --match='^(?:(?!.*vdc|.*vdh|.*vdz).)*$'
+    ./disk-io --match='^(?:(?!vdc|vdh|vdz).)*$'
 
 Match all disks starting with sd, vd, md, dm and nvme disks except the raw disk itself
 
